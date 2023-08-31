@@ -40,10 +40,10 @@ int main(){
 
         // TRECHO DO CODIGO PARA VERIFICAR AS RETAS VERTICAIS DO LADO ESQUERDO ESQUERDO DAS BARRCAS MASCULINAS
 
-        for(i=0;i<homens;i++){ // h * ( 4 * (2m + 1 +2h + 2) + 4 * ( m(4mh + 8m + 4h + 2) + 9) + 3)
-                               // h * (  8m + 4 + 8h + 8 + 4m(4mh + 8m + 4h + 2) + 36 + 3)
-                               // h * ( 4m²h + 32m² 16mh 24m + 8m + 51)
-                               // 4m²h² + 16mh² + 32m²h + 32mh + 51h 
+        for(i=0;i<homens;i++){ // h * ( 4 * (2m + 1 +2h + 2) + 4 * ( m(4mh + 8m + 4h + 2) + 9)) + 3
+                               // h * (  8m + 4 + 8h + 8 + 4m(4mh + 8m + 4h + 2) + 36) + 3
+                               // h * ( 4m²h + 32m² 16mh 24m + 8m + 48) + 3
+                               // 4m²h² + 16mh² + 32m²h + 32mh + 48h + 3 
             for(j=0;j<mulheres;j++){ // m 
                 if(coordenadasMulheres[j][2] > coordenadasHomens[i][0]) break; // 1
                 else{
