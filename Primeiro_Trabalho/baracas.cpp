@@ -40,30 +40,33 @@ int main(){
 
         // TRECHO DO CODIGO PARA VERIFICAR AS RETAS VERTICAIS DO LADO ESQUERDO ESQUERDO DAS BARRCAS MASCULINAS
 
-        for(i=0;i<homens;i++){
-            for(j=0;j<mulheres;j++){
-                if(coordenadasMulheres[j][2] > coordenadasHomens[i][0]) break;
+        for(i=0;i<homens;i++){ // h * ( 4 * (2m + 1 +2h + 2) + 4 * ( m(4mh + 8m + 4h + 2) + 9) + 3)
+                               // h * (  8m + 4 + 8h + 8 + 4m(4mh + 8m + 4h + 2) + 36 + 3)
+                               // h * ( 4m²h + 32m² 16mh 24m + 8m + 51)
+                               // 4m²h² + 16mh² + 32m²h + 32mh + 51h 
+            for(j=0;j<mulheres;j++){ // m 
+                if(coordenadasMulheres[j][2] > coordenadasHomens[i][0]) break; // 1
                 else{
-                    if(j == mulheres-1) mulheresOk=true;
+                    if(j == mulheres-1) mulheresOk=true;// 1 vez // 1
                 }
-            }
+            } // 2m + 1
 
-            if(mulheresOk){
-                for(j=0;j<homens;j++){
-                    if(coordenadasHomens[j][0] < coordenadasHomens[i][0]) break;
+            if(mulheresOk){ // 1
+                for(j=0;j<homens;j++){ // h
+                    if(coordenadasHomens[j][0] < coordenadasHomens[i][0]) break; // 1
                     else{
-                        if(j==homens-1) homensOk=true;
-                    }
+                        if(j==homens-1) homensOk=true; // 1 vez  // 1
+                    } 
                 }
-            }
+            }// 2h + 2
 
-            if((mulheresOk)&&(homensOk)){
+            if((mulheresOk)&&(homensOk)){ // 1 vez
                 respostas += "\nCaso " + to_string(contador) + ": É possível separar os dois grupos!\n";
                 break;
             }
-            
-            mulheresOk = homensOk = false;
         
+            mulheresOk = homensOk = false; // 1 vez
+
         // TRECHO DO CODIGO PARA VERIFICAR AS RETAS VERTICAIS DO LADO DIREITO DAS BARRCAS MASCULINAS
 
             for(j=0;j<mulheres;j++){
@@ -90,7 +93,6 @@ int main(){
             mulheresOk = homensOk = false;
         
         // TRECHO DO CODIGO PARA VERIFICAR AS RETAS HORIZONTAIS DE CIMA DAS BARRACAS MASCULINAS
-
         
             for(j=0;j<mulheres;j++){
                 if(coordenadasMulheres[j][3] > coordenadasHomens[i][1]) break;
@@ -115,10 +117,8 @@ int main(){
             
             mulheresOk = homensOk = false;
         
-
         // TRECHO DO CODIGO PARA VERIFICAR AS RETAS HORIZONTAIS DE BAIXO DAS BARRACAS MASCULINAS
 
-        
             for(j=0;j<mulheres;j++){
                 if(coordenadasMulheres[j][1] < coordenadasHomens[i][3]) break;
                 else{
@@ -145,44 +145,44 @@ int main(){
 
         // TRECHO DO CODIGO PARA VERIFICAR A RETA DIAGONAL DO PONTO SUPERIOR ESQUERDO DAS BARRCAS MASCULINAS
 
-        
+            for(j=0;j<mulheres;j++){ // m
+    /* 2 */     if((coordenadasMulheres[j][2] <= coordenadasHomens[i][0]) || (coordenadasMulheres[j][1] <= coordenadasHomens[i][3])) continue;
+    /* 3 */     coeficienteAngular = (coordenadasMulheres[j][1] - coordenadasHomens[i][3]) / (coordenadasMulheres[j][2] - coordenadasHomens[i][0]);
+    /* 2 */     coeficienteLinear = coordenadasMulheres[j][1] - (coeficienteAngular * coordenadasMulheres[j][2]);
 
-            for(j=0;j<mulheres;j++){
-                if((coordenadasMulheres[j][2] <= coordenadasHomens[i][0]) || (coordenadasMulheres[j][1] <= coordenadasHomens[i][3])) continue;
-                coeficienteAngular = (coordenadasMulheres[j][1] - coordenadasHomens[i][3]) / (coordenadasMulheres[j][2] - coordenadasHomens[i][0]);
-                coeficienteLinear = coordenadasMulheres[j][1] - (coeficienteAngular * coordenadasMulheres[j][2]);
-
-                for(k=0;k<mulheres;k++){
-                    yDiagonal = (coeficienteAngular * coordenadasMulheres[k][2]) + coeficienteLinear;
+                for(k=0;k<mulheres;k++){ // m
+    /* 2 */         yDiagonal = (coeficienteAngular * coordenadasMulheres[k][2]) + coeficienteLinear;
 //                    cout << "yDiagonal: "<< yDiagonal << " e y verdadeiro: " << coordenadasMulheres[k][1] << endl;
-                    if(coordenadasMulheres[k][1] < round(yDiagonal)) break;
+    /* 1 */           if(coordenadasMulheres[k][1] < round(yDiagonal)) break;
                     else{
-                        if(k == mulheres-1) mulheresOk = true;
+    /* 1 */              if(k == mulheres-1) mulheresOk = true; // 1 ves;
                     }
-                }
+                } // 4m + 1
 
-                if(mulheresOk){
-                    for(k=0;k<homens;k++){
-                        yDiagonal = (coeficienteAngular * coordenadasHomens[k][0]) + coeficienteLinear;
+                if(mulheresOk){ // 1 vez
+                    for(k=0;k<homens;k++){ // h
+                        yDiagonal = (coeficienteAngular * coordenadasHomens[k][0]) + coeficienteLinear; // 2
 //                        cout << "yDiagonal: "<< round(yDiagonal) << " e y verdadeiro: " << coordenadasHomens[k][3] << endl;
-                        if(coordenadasHomens[k][3] > round(yDiagonal)) break;
+                        if(coordenadasHomens[k][3] > round(yDiagonal)) break; // 1
                         else{
-                            if(k == homens-1) homensOk = true;
+                            if(k == homens-1) homensOk = true; // 1
                         }
                     }
-                }
+                } // 4h + 2
 
-                if((mulheresOk)&&(homensOk)){
+                if((mulheresOk)&&(homensOk)){ // 1
                     respostas += "\nCaso " + to_string(contador) + ": É possível separar os dois grupos!\n";
                     break;
                 }
-                mulheresOk = homensOk = false;
-            }
+                mulheresOk = homensOk = false; // 1
+            } 
 
-            if((mulheresOk)&&(homensOk)){
+            if((mulheresOk)&&(homensOk)){ // 1
                 break;
-            }    
-        
+            } //m * (4m +1) * (4h + 2) + 1 + 1 + 7 => m * (4m +1) * (4h + 2) + 9 
+              // (4m² + m) * (4h + 2) + 9
+              // 4m²h + 8m² + 4hm + 2m + 9
+              // m(4mh + 8m + 4h + 2) + 9
 
         // TRECHO DO CODIGO PARA VERIFICAR A RETA DIAGONAL DO PONTO INFERIOR DIREITO DAS BARRACAS MASCULINAS
 
@@ -308,167 +308,3 @@ int main(){
     cout << respostas << endl;
     return 0;
 }
-
-/*
-    1 - 
-
-*/
-
-/*
-
-PONTO SUPERIOR ESQUERDO
-3 3
-10 10 20 20
-30 30 40 40
-50 50 60 60
-10 40 20 50
-30 60 40 70
-50 80 60 90
-
-PONTO INFERIOR DIREITO
-3 3
-10 40 20 50
-50 80 60 90
-30 60 40 70
-30 30 40 40
-50 50 60 60
-10 10 20 20
-
-PONTO INFERIOR ESQUERDO
-3 3
-10 80 20 90
-30 60 40 70
-50 40 60 50
-10 50 20 60
-30 30 40 40
-50 10 60 20
-
-PONTO SUPERIOR DIREITO
-3 3
-10 50 20 60
-30 30 40 40
-50 10 60 20
-10 80 20 90
-30 60 40 70
-50 40 60 50
-
-RETA VERTICAL ESQUERDA
-3 3
-30 10 40 20
-30 30 40 40
-30 50 40 60
-10 10 20 20
-10 30 20 40
-10 50 20 60
-
-RETA VERTICAL DIREITA
-3 3
-10 10 20 20
-10 30 20 40
-10 50 20 60
-30 10 40 20
-30 30 40 40
-30 50 40 60
-
-RETA HORIZONTAL DE CIMA
-3 3
-30 30 40 40
-50 30 60 40
-70 30 80 40
-30 10 40 20
-50 10 60 20
-70 10 80 20
-
-RETA HORIZONTAL DE BAIXO
-3 3
-30 10 40 20
-50 10 60 20
-70 10 80 20
-30 30 40 40
-50 30 60 40
-70 30 80 40
-
-teste git 234
-PONTO INFERIOR ESQUERDO TANGENTES
-3 3
-10 80 20 90
-30 60 40 70
-50 40 60 50
-10 60 20 70
-30 40 40 50
-50 20 60 30
-
-PONTO SUPERIOR DIREITO TANGENTES
-3 3
-10 60 20 70
-30 40 40 50
-50 20 60 30
-10 80 20 90
-30 60 40 70
-50 40 60 50
-
-PONTO INFERIOR DIREITO TANGENTES
-3 3
-70 50 80 60
-80 70 90 80
-90 90 100 100
-80 40 90 50
-90 60 100 70
-100 80 110 90
-
-PONTO SUPERIOR ESQUERDO 
-3 3
-80 40 90 50
-90 60 100 70
-100 80 110 90
-70 50 80 60
-80 70 90 80
-90 90 100 100
-
-*/
-
-            /*
-            omega = 0;
-            acrescimo = 3.14156/90;
-            // indo de 0 a 45 graus em radianos
-            for(int k=0;k<45;k++){
-                // verificando para todas as outras barracas
-                for(j=0;j<homens;j++){
-                    // ela mesma nao conta
-                    if(j!=i){
-                        yDiagonal = (tan(omega) * (coordenadasHomens[j][0] - coordenadasHomens[i][0])) + coordenadasHomens[i][3];
-                        if(coordenadasHomens[j][3] > yDiagonal){
-                             separavel = false;
-                             break;
-                             }else separavel = true;
-                        cout << coordenadasHomens[j][3] << "::" << yDiagonal  << endl;
-                    }
-                }
-                if(separavel){
-                    k=45;
-                    i=homens;
-                    cout << "Deu certo ehhhh";
-                }   
-                omega += acrescimo;
-            }
-            */
-
-            /*
-            for(j=0;j<homens;j++){
-                if(j != i){
-                    // se estiver na esquerda
-                    if(coordenadasHomens[j][0] > coordenadasHomens[i][0]){
-                        //se estiver com pelo menos mais 1 no eixo y 
-                        if(coordenadasHomens[j][3] > coordenadasHomens[i][3]){
-                            // coeficiente Angular = (x1' - x1) / (y2' - y2)
-                            coeficienteAngular = (coordenadasHomens[j][3] - coordenadasHomens[i][3]) / (coordenadasHomens[j][0] - coordenadasHomens[i][0]); 
-                            //c coeficiente Linear = y2 - coeficienteAngular * x1 
-                            coeficienteLinear = coordenadasHomens[i][3] - (coeficienteAngular * coordenadasHomens[i][0]);
-                        }
-                    
-
-
-                    }
-                }
-            }
-            */
