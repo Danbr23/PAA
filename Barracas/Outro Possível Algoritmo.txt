@@ -1,0 +1,43 @@
+omega = 0;
+            acrescimo = 3.14156/90;
+            // indo de 0 a 45 graus em radianos
+            for(int k=0;k<45;k++){
+                // verificando para todas as outras barracas
+                for(j=0;j<homens;j++){
+                    // ela mesma nao conta
+                    if(j!=i){
+                        yDiagonal = (tan(omega) * (coordenadasHomens[j][0] - coordenadasHomens[i][0])) + coordenadasHomens[i][3];
+                        if(coordenadasHomens[j][3] > yDiagonal){
+                             separavel = false;
+                             break;
+                             }else separavel = true;
+                        cout << coordenadasHomens[j][3] << "::" << yDiagonal  << endl;
+                    }
+                }
+                if(separavel){
+                    k=45;
+                    i=homens;
+                    cout << "Deu certo ehhhh";
+                }   
+                omega += acrescimo;
+            }
+            */
+
+            /*
+            for(j=0;j<homens;j++){
+                if(j != i){
+                    // se estiver na esquerda
+                    if(coordenadasHomens[j][0] > coordenadasHomens[i][0]){
+                        //se estiver com pelo menos mais 1 no eixo y 
+                        if(coordenadasHomens[j][3] > coordenadasHomens[i][3]){
+                            // coeficiente Angular = (x1' - x1) / (y2' - y2)
+                            coeficienteAngular = (coordenadasHomens[j][3] - coordenadasHomens[i][3]) / (coordenadasHomens[j][0] - coordenadasHomens[i][0]); 
+                            //c coeficiente Linear = y2 - coeficienteAngular * x1 
+                            coeficienteLinear = coordenadasHomens[i][3] - (coeficienteAngular * coordenadasHomens[i][0]);
+                        }
+                    
+
+
+                    }
+                }
+            }
